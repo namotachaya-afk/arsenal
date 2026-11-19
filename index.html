@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arsenal FC Thailand Fanclub - เว็บไซต์เพื่อแฟนบอลปืนใหญ่</title>
+    <!-- นำเข้าฟอนต์ภาษาไทย Prompt จาก Google Fonts เพื่อให้อ่านง่ายและทันสมัย -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    
+    <style>
+        /* การตั้งค่าตัวแปรสีตามธีมสโมสรอาร์เซนอล */
+        :root {
+            --arsenal-red: #EF0107;
+            --arsenal-dark-red: #9C0004;
+            --arsenal-navy: #063672;
+            --arsenal-gold: #9C824A;
+            --bg-light: #F8F9FA;
+            --text-dark: #1E1E1E;
+            --text-muted: #555555;
+            --white: #FFFFFF;
+        }
+
+        /* รีเซ็ตค่าพื้นฐานและการเลื่อนหน้าจอแบบนุ่มนวล (Smooth Scroll) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* แถบเมนูนำทางด้านบน (Sticky Navigation Bar) */
+        header {
+            background-color: var(--arsenal-red);
+            color: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .logo span {
+            background-color: var(--white);
+            color: var(--arsenal-red);
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 1rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--arsenal-dark-red);
+            color: #FFD700;
+        }
+
+        /* ส่วนแบนเนอร์ต้อนรับ (Hero Section) */
+        .hero {
+            background: linear-gradient(135deg, var(--arsenal-red) 0%, var(--arsenal-dark-red) 70%, var(--arsenal-navy) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+            opacity: 0.95;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--arsenal-red);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            background-color: var(--arsenal-gold);
+            color: var(--white);
+        }
+
+        /* โครงสร้างหลักของแต่ละ Section */
+        section {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            scroll-margin-top: 80px; /* ป้องกันหัวข้อโดนแถบเมนูบังเวลากดลิงก์ */
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--arsenal-navy);
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        /* การ์ดแสดงเนื้อหา (Grid Layout) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border-top: 5px solid var(--arsenal-red);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .card h3 {
+            color: var(--arsenal-red);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: var(--arsenal-navy);
+            color: var(--white);
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        /* ตารางโปรแกรมการแข่งขัน */
+        .table-responsive {
+            overflow-x: auto;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--arsenal-navy);
+            color: var(--white);
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #EEEEEE;
+        }
+
+        tr:hover {
+            background-color: #FFF5F5;
+        }
+
+        /* ส่วนผู้พัฒนาเว็บไซต์ (Developer Profile) */
+        .dev-section {
+            background: linear-gradient(to right, #FFFFFF, #FFF0F0);
+            border: 2px solid var(--arsenal-red);
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            box-shadow: 0 6px 20px rgba(239, 1, 7, 0.1);
+        }
+
+        .dev-info {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .dev-badge {
+            background-color: var(--arsenal-gold);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .dev-info h2 {
+            color: var(--arsenal-navy);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .dev-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--white);
+            transition: opacity 0.3s ease;
+        }
+
+        .social-btn:hover {
+            opacity: 0.85;
+        }
+
+        .btn-fb { background-color: #1877F2; }
+        .btn-ig { background-color: #E4405F; }
+        .btn-yt { background-color: #FF0000; }
+
+        /* ส่วนท้ายเว็บไซต์ (Footer) */
+        footer {
+            background-color: var(--arsenal-navy);
+            color: var(--white);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* การปรับแต่งสำหรับหน้าจอมือถือ (Responsive Design) */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .dev-section {
+                text-align: center;
+                justify-content: center;
+            }
+            .dev-social {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- แถบเมนูด้านบน -->
+    <header>
+        <nav class="navbar">
+            <a href="#home" class="logo">
+                <span>AFC</span> ARSENAL FANCLUB
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">หน้าแรก</a></li>
+                <li><a href="#history">ประวัติสโมสร</a></li>
+                <li><a href="#squad">นักเตะชุดปัจจุบัน</a></li>
+                <li><a href="#fixtures">โปรแกรมแข่งขัน</a></li>
+                <li><a href="#developer">ผู้พัฒนาเว็บไซต์</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ส่วนหน้าแรก (Hero Section) -->
+    <div id="home" class="hero">
+        <h1>VICTORIA CONCORDIA CRESCIT</h1>
+        <p>"ชัยชนะเกิดจากความสามัคคี" ยินดีต้อนรับสู่พื้นที่รวมพลคนรักปืนใหญ่ อาร์เซนอล เอฟซี อัปเดตข้อมูลสโมสร ประวัติศาสตร์ และความเคลื่อนไหวล่าสุด</p>
+        <a href="#history" class="btn-primary">เริ่มต้นสำรวจสโมสร</a>
+    </div>
+
+    <!-- ส่วนประวัติสโมสร -->
+    <section id="history">
+        <h2 class="section-title">ประวัติและเกียรติยศสโมสร</h2>
+        <p class="section-subtitle">เรื่องราวความยิ่งใหญ่ของยอดทีมแห่งลอนดอนเหนือ</p>
+        
+        <div class="grid-container">
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arsenal FC Thailand Fan Hub | พัฒนาโดย ด.ช.ธชย ธิยะสืบ</title>
+    <!-- นำเข้าฟอนต์ภาษาไทยที่อ่านง่ายและทันสมัยจาก Google Fonts -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           1. การตั้งค่าสีหลักตามธีมสโมสรอาร์เซนอล (UX/UI Color System)
+           ========================================= */
+        :root {
+            --arsenal-red: #EF0107;
+            --arsenal-dark-red: #9C0004;
+            --arsenal-navy: #063672;
+            --arsenal-gold: #9C824A;
+            --bg-light: #F8F9FA;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --white: #FFFFFF;
+        }
+
+        /* รีเซ็ตค่าเริ่มต้นและการเลื่อนหน้าจอแบบนุ่มนวล (Smooth Scroll) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-family: 'Prompt', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        /* =========================================
+           2. แถบเมนูนำทาง (Sticky Navigation Bar)
+           ========================================= */
+        header {
+            background-color: var(--arsenal-red);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .logo span {
+            background-color: var(--white);
+            color: var(--arsenal-red);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 1rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        /* UX Feedback: เปลี่ยนสีเมื่อนำเมาส์ไปชี้ */
+        .nav-links a:hover {
+            background-color: var(--arsenal-dark-red);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* =========================================
+           3. ส่วนแบนเนอร์ต้อนรับ (Hero Section)
+           ========================================= */
+        .hero {
+            background: linear-gradient(135deg, var(--arsenal-red) 0%, var(--arsenal-dark-red) 60%, var(--arsenal-navy) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 5rem 2rem;
+            border-bottom: 5px solid var(--arsenal-gold);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--arsenal-red);
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--arsenal-gold);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+
+        /* =========================================
+           4. โครงสร้างเนื้อหาแต่ละส่วน (Section Layout)
+           ========================================= */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* เว้นระยะด้านบนเวลาคลิกลิงก์เมนู เพื่อไม่ให้ Header บังหัวข้อ */
+        section {
+            scroll-margin-top: 80px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--arsenal-navy);
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--arsenal-red);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* =========================================
+           5. การ์ดข้อมูลและตาราง (Cards & Tables UI)
+           ========================================= */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--arsenal-red);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(239, 1, 7, 0.12);
+        }
+
+        .card h3 {
+            color: var(--arsenal-red);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: var(--arsenal-navy);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ตารางโปรแกรมการแข่งขัน */
+        .match-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .match-table th {
+            background-color: var(--arsenal-navy);
+            color: var(--white);
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .match-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .match-table tr:hover {
+            background-color: #FFF5F5;
+        }
+
+        /* =========================================
+           6. ส่วนผู้พัฒนาเว็บไซต์ (Developer Profile Card)
+           ========================================= */
+        .dev-section {
+            background-color: var(--arsenal-navy);
+            color: var(--white);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            border-left: 8px solid var(--arsenal-gold);
+            box-shadow: 0 10px 30px rgba(6, 54, 114, 0.2);
+        }
+
+        .dev-info {
+            flex: 1 1 500px;
+        }
+
+        .dev-tag {
+            background-color: var(--arsenal-gold);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .dev-info h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dev-info p {
+            color: #CBD5E1;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            background-color: var(--arsenal-red);
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background-color: var(--white);
+            color: var(--arsenal-red);
+        }
+
+        /* =========================================
+           7. ส่วนท้ายเว็บไซต์ (Footer)
+           ========================================= */
+        footer {
+            background-color: #0F172A;
+            color: #94A3B8;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            font-size: 0.95rem;
+        }
+
+        footer strong {
+            color: var(--white);
+        }
+
+        /* การปรับแต่งสำหรับหน้าจอมือถือ (Mobile Responsive) */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+x;
+        }
+
+        .dev-tag {
+            background-color: var(--arsenal-gold);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .dev-info h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dev-info p {
+            color: #CBD5E1;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            background-color: var(--arsenal-red);
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background-color: var(--white);
+            color: var(--arsenal-red);
+        }
+
+        /* =========================================
+           7. ส่วนท้ายเว็บไซต์ (Footer)
+           ========================================= */
+        footer {
+            background-color: #0F172A;
+            color: #94A3B8;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            font-size: 0.95rem;
+        }
+
+        footer strong {
+            color: var(--white);
+        }
+
+        /* การปรับแต่งสำหรับหน้าจอมือถือ (Mobile Responsive) */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .dev-section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="#home" class="logo">
+                ARSENAL FC <span>THAILAND FAN</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">หน้าแรก</a></li>
+                <li><a href="#history">ประวัติสโมสร</a></li>
+                <li><a href="#squad">นักเตะชุดหลัก</a></li>
+                <li><a href="#fixtures">ตารางแข่ง</a></li>
+                <li><a href="#developer">ผู้พัฒนาเว็บไซต์</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h1>VICTORIA CONCORDIA CRESCIT</h1>
+        <p>"ชัยชนะเกิดจากความสามัคคี" ยินดีต้อนรับสู่เว็บไซต์รวบรวมข้อมูลและเรื่องราวของสโมสรฟุตบอลอาร์เซนอล สร้างสรรค์ด้วยใจรักของเหล่าเดอะ กันเนอร์ส</p>
+        <a href="#history" class="btn-primary">สำรวจเรื่องราวของปืนใหญ่</a>
+    </section>
+
+    <section id="history" class="container">
+        <h2 class="section-title">ประวัติและความยิ่งใหญ่</h2>
+        <p class="section-subtitle">จุดเริ่มต้นจากโรงงานผลิตอาวุธ สู่ตำนานไร้พ่ายแห่งพรีเมียร์ลีก</p>
+        
+        <div class="grid-3">
+            <div class="card">
+                <span class="badge">ก่อตั้งปี 1886</span>
+                <h3>กำเนิดปืนใหญ่</h3>
+                <p>ก่อตั้งขึ้นในย่านวูลวิช กรุงลอนดอน โดยกลุ่มคนงานโรงงานผลิตอาวุธ Royal Arsenal ก่อนจะย้ายสู่สนามไฮบิวรี และเอมิเรตส์ สเตเดียมในปัจจุบัน</p>
+            </div>
+            <div class="card">
+                <span class="badge">ฤดูกาล 2003–04</span>
+                <h3>แชมป์ไร้พ่าย (The Invincibles)</h3>
+                <p>สร้างประวัติศาสตร์หน้าสำคัญด้วยการคว้าแชมป์พรีเมียร์ลีกโดยไม่แพ้ใครเลยตลอดทั้งฤดูกาล (38 นัด) จนได้รับถ้วยรางวัลทองคำอันทรงเกียรติ</p>
+            </div>
+            <div class="card">
+                <span class="badge">เกียรติประวัติ</span>
+                <h3>เจ้าแห่งเอฟเอ คัพ</h3>
+                <p>อาร์เซนอลเป็นสโมสรที่ประสบความสำเร็จสูงสุดในรายการ เอฟเอ คัพ ด้วยการคว้าแชมป์ไปครองถึง 14 สมัย มากที่สุดในประวัติศาสตร์ฟุตบอลอังกฤษ</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="squad" class="container">
+        <h2 class="section-title">ขุมกำลังหลัก เดอะ กันเนอร์ส</h2>
+        <p class="section-subtitle">ผู้เล่นคนสำคัญที่เป็นหัวใจในเกมรุกและเกมรับของทีม</p>
+
+        <div class="grid-3">
+            <div class="card">
+                <span class="badge">กัปตันทีม | กองกลาง</span>
+                <h3>มาร์ติน โอเดการ์ด (#8)</h3>
+                <p>จอมทัพชาวนอร์เวย์ ผู้บัญชาการเกมรุกด้วยวิสัยทัศน์การจ่ายบอลที่เฉียบคมและความขยันในการไล่เพรสซิ่งแดนบน</p>
+            </div>
+            <div class="card">
+                <span class="badge">ปีกขวา | ลูกหม้อสโมสร</span>
+                <h3>บูกาโย ซากา (#7)</h3>
+                <p>สตาร์คนสำคัญจากอคาเดมี Hale End ที่มีความเร็ว เทคนิคเฉพาะตัวสูง และเป็นตัวความหวังในการทำประตูของทีม</p>
+            </div>
+            <div class="card">
+                <span class="badge">กองหลัง | กำแพงเหล็ก</span>
+                <h3>วิลเลียม ซาลิบา (#2)</h3>
+                <p>ปราการหลังชาวฝรั่งเศสที่มีความแข็งแกร่ง อ่านเกมขาด และช่วยให้แนวรับของอาร์เซนอลเหนียวแน่นที่สุดในลีก</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="fixtures" class="container">
+        <h2 class="section-title">โปรแกรมการแข่งขันสำคัญ</h2>
+        <p class="section-subtitle">ร่วมส่งเสียงเชียร์ทัพปืนใหญ่ไปด้วยกัน</p>
+
+        <table class="match-table">
+            <thead>
+                <tr>
+                    <th>รายการแข่งขัน</th>
+                    <th>คู่แข่งขัน</th>
+                    <th>สนาม</th>
+                    <th>สถานะ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>พรีเมียร์ลีก</td>
+                    <td><strong>อาร์เซนอล</strong> พบ เชลซี</td>
+                    <td>เอมิเรตส์ สเตเดียม (เหย้า)</td>
+                    <td>รอดำเนินการ</td>
+                </tr>
+                <tr>
+                    <td>พรีเมียร์ลีก</td>
+                    <td>ท็อตแนม ฮ็อทสเปอร์ พบ <strong>อาร์เซนอล</strong></td>
+                    <td>ท็อตแนม ฮ็อทสเปอร์ สเตเดียม (เยือน)</td>
+                    <td>นอร์ธ ลอนดอน ดาร์บี้</td>
+                </tr>
+                <tr>
+                    <td>ยูฟ่า แชมเปียนส์ลีก</td>
+                    <td><strong>อาร์เซนอล</strong> พบ บาเยิร์น มิวนิค</td>
+                    <td>เอมิเรตส์ สเตเดียม (เหย้า)</td>
+                    <td>บิ๊กแมตช์ยุโรป</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="developer" class="container">
+        <div class="dev-section">
+            <div class="dev-info">
+                <span class="dev-tag">WEB DEVELOPER & ARSENAL FC</span>
+                <h2>พัฒนาโดย: ด.ช.ธชย ธิยะสืบ</h2>
+                <p>
+                    สวัสดีครับ! ผมชื่อ <strong>ด.ช.ธชย ธิยะสืบ</strong> ผู้พัฒนาเว็บไซต์นี้ 
+                    ผมเป็นแฟนบอลตัวยง (FC) ของสโมสรอาร์เซนอล ที่ชื่นชอบสไตล์การเล่นฟุตบอลที่สวยงามและสปิริตของทีม 
+                    จึงได้นำความรู้ด้านการเขียนโค้ด HTML และ CSS มาออกแบบเว็บไซต์นี้ขึ้นเพื่อแบ่งปันข้อมูลให้กับเพื่อนๆ แฟนบอลปืนใหญ่ทุกคนครับ
+                </p>
+                <div class="social-links">
+                    <a href="#developer" class="social-btn" onclick="alert('ขอบคุณที่ติดตามผลงานของ ด.ช.ธชย ธิยะสืบ ครับ! COYG!')">ติดตามผลงาน</a>
+                    <a href="#home" class="social-btn" style="background-color: var(--arsenal-gold);">กลับขึ้นด้านบน ↑</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Arsenal FC Fan Hub | ออกแบบและพัฒนาด้วยความภาคภูมิใจโดย <strong>ด.ช.ธชย ธิยะสืบ</strong> (Gunners FC)</p>
+    </footer>
+
+</body>
+</html>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+</body>
+</html>
